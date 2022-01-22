@@ -255,6 +255,7 @@ try:
         print("SOIL SENSOR 0: " + "{:>5}%\t{:>5.3f}".format(percent_translation(chan0.value, 0), chan0.voltage))
         print("SOIL SENSOR 1: " + "{:>5}%\t{:>5.3f}".format(percent_translation(chan1.value, 1), chan1.voltage))
         print("SOIL SENSOR 2: " + "{:>5}%\t{:>5.3f}".format(percent_translation(chan2.value, 2), chan2.voltage))
+        print("SOIL SENSOR 3: " + "{:>5}%\t{:>5.3f}".format(percent_translation(chan3.value, 3), chan3.voltage))
         sleep(3)
         if flag ==1:
             humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
@@ -266,8 +267,9 @@ try:
             pubnub.publish().channel('ch2').message([DHT_Read]).pn_async(publish_callback)
             wet = get_status(percent_translation(chan0.value, 0))
             wet1 = get_status(percent_translation(chan1.value, 1))
-            wet2 = get_status(percent_translation(chan0.value, 0))
-            if wet == True or wet1 == True:
+            wet2 = get_status(percent_translation(chan2.value, 2))
+            wet3 = get_status(percent_translation(chan3.value, 3))
+            if wet == True:
                 print("turning on")
                 pump.off()
                 #GPIO.output(21, GPIO.HIGH)
